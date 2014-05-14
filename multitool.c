@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <windows.h>
 #include <ctype.h>
-#include <windows.h>
+#include <string.h>
+#include "windefs.h"
 #include "multitool.h"
 #include "libdis/libdis.h"
 
