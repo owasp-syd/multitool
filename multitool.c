@@ -150,6 +150,10 @@ int getopt(int argc, char **argv)
 		{
 			opMode = OPMODE_DISASSEMBLE;
 		}
+		else if(strcmp(argv[argHead],"-usage") == 0 && opMode == OPMODE_NONE)
+		{
+			opMode = OPMODE_USAGE;
+		}
 		else if(strcmp(argv[argHead],"-nop") == 0 && opMode == OPMODE_NONE)
 		{
 			opMode = OPMODE_NOP;
@@ -796,4 +800,3 @@ unsigned long wrapperConvertAddress(char *inFile, char *convertAddr)
 	
 	return convertAddress(mBuf, fSize, convertAddr);
 }
-
