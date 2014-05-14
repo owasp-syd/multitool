@@ -1,3 +1,6 @@
+#. Binaries
+multitool
+
 # Object files
 *.o
 *.ko
@@ -25,3 +28,6 @@
 # Test files and output files
 *.bin
 *.lst
+
+#. GCC Junk
+*.gch
