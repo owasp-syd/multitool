@@ -7,7 +7,9 @@
 #include <sys/stat.h>
 #include <ctype.h>
 #include <string.h>
-#include "windefs.h"
+
+#include <windows.h>
+
 #include "multitool.h"
 #include "libdis/libdis.h"
 
