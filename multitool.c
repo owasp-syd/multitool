@@ -26,7 +26,7 @@ int caOpmode = VIRTUAL_TO_PHYSICAL;
 
 int main(int argc, char **argv)
 {
-	printf("[V] multitool v0.1 (%s)\n", __TIMESTAMP__);
+	// printf("[V] multitool v0.1 (%s)\n", __TIMESTAMP__);
 	int argCount = getopt(argc, argv);
 
 	if(argCount == 0)
@@ -75,6 +75,11 @@ int main(int argc, char **argv)
 		}
 		x86_init (opt_none, NULL, NULL);
 		nopAt(inFile, atAddress, disassembleCount);
+	}
+	else if(opMode == OPMODE_BOGOMUPPET)
+	{
+		x86_init (opt_none, NULL, NULL);
+		bogomuppetDisassemble();
 	}
 	else
 	{
@@ -155,6 +160,10 @@ int getopt(int argc, char **argv)
 		else if(strcmp(argv[argHead],"-nop") == 0 && opMode == OPMODE_NONE)
 		{
 			opMode = OPMODE_NOP;
+		}
+		else if(strcmp(argv[argHead],"-bogomuppet-disasm") == 0 && opMode == OPMODE_NONE)
+		{
+			opMode = OPMODE_BOGOMUPPET;
 		}
 		else
 		{
@@ -797,4 +806,49 @@ unsigned long wrapperConvertAddress(char *inFile, char *convertAddr)
 	}
 	
 	return convertAddress(mBuf, fSize, convertAddr);
+}
+
+#define MAX_INSTR 15
+
+void bogomuppetDisassemble()
+{
+	char *disasmBuffer = (char *)malloc(MAX_INSTR);
+	if(disasmBuffer == NULL)
+	{
+		printf("E:unable to malloc disasm buffer\n");
+		return;
+	}
+
+	int disasmPtr = 0;
+	memset(disasmBuffer,0,MAX_INSTR);
+	int cont = 1;
+
+	while(cont == 1)
+	{
+  	disasmBuffer[disasmPtr++] = getchar();
+		if(disasmBuffer[0] == '\xCC')
+		{
+			cont = 0;
+		}
+		else
+		{
+			x86_insn_t insn;
+			int newSize = x86_disasm (disasmBuffer, disasmPtr, 0, 0, &insn);
+			if(newSize == 0)
+			{
+				continue;	
+			}
+			else
+			{
+				char line[256];
+				memset(line,0,256);
+				x86_format_insn (&insn, line, 256, intel_syntax);
+				printf("%s\n",line);
+				disasmPtr = 0;
+				memset(disasmBuffer,0,MAX_INSTR);
+			}
+		}
+	}
+
+	return;
 }
