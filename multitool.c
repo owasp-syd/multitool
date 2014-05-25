@@ -9,6 +9,7 @@
 #include <string.h>
 #include "libos/windows.h"
 #include "multitool.h"
+#include "bgmtree.h"
 #include "libdis/libdis.h"
 
 char *inFile = NULL;
@@ -80,6 +81,11 @@ int main(int argc, char **argv)
 	{
 		x86_init (opt_none, NULL, NULL);
 		bogomuppetDisassemble();
+	}
+	else if(opMode == OPMODE_BGMTREE)
+	{
+		x86_init (opt_none, NULL, NULL);
+		bogomuppetTree();
 	}
 	else
 	{
@@ -164,6 +170,10 @@ int getopt(int argc, char **argv)
 		else if(strcmp(argv[argHead],"-bogomuppet-disasm") == 0 && opMode == OPMODE_NONE)
 		{
 			opMode = OPMODE_BOGOMUPPET;
+		}
+		else if(strcmp(argv[argHead],"-bogomuppet-tree") == 0 && opMode == OPMODE_NONE)
+		{
+			opMode = OPMODE_BGMTREE;
 		}
 		else
 		{

@@ -8,6 +8,7 @@
 #define OPMODE_NOP 7
 #define OPMODE_USAGE 8
 #define OPMODE_BOGOMUPPET 9
+#define OPMODE_BGMTREE 10
 
 #define VIRTUAL_TO_PHYSICAL 0
 #define PHYSICAL_TO_VIRTUAL 1
@@ -29,3 +30,4 @@ unsigned long convertAddress(char *fileBuffer, unsigned long bufLen, char *addrO
 void disassembleAt(char *_inFile, char *_atAddress, int disassembleTimes);
 void nopAt(char *_inFile, char *_atAddress, int disassembleTimes);
 void bogomuppetDisassemble();
+void bogomuppetTree();
