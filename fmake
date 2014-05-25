@@ -1,0 +1,5 @@
+#!/bin/sh
+
+gcc -m32 -c bgmtree.c
+gcc -m32 -c multitool.c
+gcc -m32 -o multitool *.o libdis/*.o
